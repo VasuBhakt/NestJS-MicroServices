@@ -1,0 +1,1 @@
+export const PRODUCT_REDIS_CLIENT = "ProductRedisClient";

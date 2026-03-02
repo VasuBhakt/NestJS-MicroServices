@@ -23,6 +23,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "@nestjs/microservices": "^11.1.14"
+    "@nestjs/microservices": "^11.1.14",
+    "ioredis": "^5.10.0"
   }
 }
