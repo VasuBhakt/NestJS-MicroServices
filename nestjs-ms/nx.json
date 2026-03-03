@@ -47,5 +47,16 @@
         "apps/payments-e2e/**/*"
       ]
     }
-  ]
+  ],
+  "targetDefaults": {
+    "build": {
+      "options": {
+        "assets": [{
+          "glob": "*.proto",
+          "input": "proto",
+          "output": "proto"
+        }]
+      }
+    }
+  }
 }

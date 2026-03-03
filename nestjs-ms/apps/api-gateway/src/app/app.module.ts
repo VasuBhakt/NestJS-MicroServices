@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ORDER_SERVICE, PAYMENT_SERVICE, PRODUCT_SERVICE, USER_SERVICE } from '../../../const';
+import { ORDER_SERVICE, PAYMENT_SERVICE, PRODUCT_GRPC_URL, PRODUCT_SERVICE, USER_SERVICE } from '../../../const';
+import { PRODUCTS_PACKAGE_NAME } from '../../../../types/proto/products'
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { OrdersController } from './orders/orders.controller';
+import { join } from 'path';
+import { ProductsController } from './products/products.controller';
 
 @Module({
   imports: [ClientsModule.register([
@@ -22,10 +25,12 @@ import { OrdersController } from './orders/orders.controller';
       }
     },
     {
-      name: PRODUCT_SERVICE.name,
-      transport: Transport.TCP,
+      name: PRODUCTS_PACKAGE_NAME,
+      transport: Transport.GRPC,
       options: {
-        port: PRODUCT_SERVICE.port
+        package: PRODUCTS_PACKAGE_NAME,
+        protoPath: join(__dirname, 'proto/products.proto'),
+        url: PRODUCT_GRPC_URL
       }
     },
     {
@@ -36,7 +41,7 @@ import { OrdersController } from './orders/orders.controller';
       }
     },
   ])],
-  controllers: [AppController, OrdersController],
+  controllers: [AppController, OrdersController, ProductsController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

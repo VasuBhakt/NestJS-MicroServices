@@ -17,3 +17,5 @@ export const PAYMENT_SERVICE = {
 export const REDIS_PORT = 6379
 
 export const REDIS_PRODUCT_CLIENT = 'redisProductClient'
+
+export const PRODUCT_GRPC_URL = 'localhost:50052'

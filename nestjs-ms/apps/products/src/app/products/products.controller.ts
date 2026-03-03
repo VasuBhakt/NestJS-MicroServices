@@ -1,18 +1,17 @@
 import { Controller, Get } from '@nestjs/common';
 import { EventPattern, MessagePattern } from '@nestjs/microservices';
+import { Observable } from 'rxjs';
+import { ProductRequest, ProductResponse, ProductServiceController, ProductServiceControllerMethods } from 'types/proto/products';
 
 @Controller('products')
-export class ProductsController {
+@ProductServiceControllerMethods()
+export class ProductsController implements ProductServiceController {
 
-    @MessagePattern('get_product')
-    getProduct(id) {
-        return {message: 'Product fetched: ', id};
+    getProduct(request: ProductRequest): Promise<ProductResponse> | Observable<ProductResponse> | ProductResponse {
+        return {
+            productId: request.productId,
+            name: "Adidas",
+            price: 68000
+        }
     }
-
-    @EventPattern('order.created') 
-    async updateStock(order: {id: number, productId: number}) {
-        console.log("Checking stock for the product: ", order.productId);
-        console.log("Stock updated");
-    }
-
 }
